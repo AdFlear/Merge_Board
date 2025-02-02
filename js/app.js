@@ -1,13 +1,23 @@
-import {Application, Assets, Container, Graphics, Sprite, Texture, AnimatedSprite,  MeshRope, Point, Text, BitmapText} from "pixi.js";
+import {
+  Application,
+  Assets,
+  Container,
+  Graphics,
+  Sprite,
+  AnimatedSprite,
+  MeshRope,
+  Point,
+  Text,
+  BitmapText,
+} from "pixi.js";
+import gsap from 'gsap';
 import { sound } from "@pixi/sound";
-import merge from '../assets/img/merge/merge.json';
-import '../assets/img/merge/merge.png';
-import particles from '../assets/img/particles/glitter.json';
-import '../assets/img/particles/glitter.png';
+import mergeSource from '../assets/img/merge/merge.png';
 import finger from '../assets/img/finger.png';
 import logo from '../assets/img/ui/logo.png';
 import soundBG from '../assets/img/ui/btn_light_large.png';
 import soundOn from '../assets/img/ui/sound-on.png';
+import bgSource from '../assets/img/ui/bg_grid.png';
 import soundOff from '../assets/img/ui/sound-off.png';
 import button from '../assets/img/ui/green_button.png';
 import progress from '../assets/img/ui/bar_money.png';
@@ -16,26 +26,90 @@ import background from '../assets/img/music/bg.mp3';
 import merge_sound from '../assets/img/music/merge.wav';
 import click from '../assets/img/music/click.wav';
 import coin_add from '../assets/img/music/coin_add.wav';
-import gsap from 'gsap';
+import starSource from '../assets/img/star.png';
+// import fontSource from '../assets/img/TobiGreekCyrillic.fnt';
+import itemSource_1 from '../assets/img/items/item_1.png';
+import itemSource_2 from '../assets/img/items/item_2.png';
+import itemSource_3 from '../assets/img/items/item_3.png';
+import itemSource_4 from '../assets/img/items/item_4.png';
+import itemSource_5 from '../assets/img/items/item_5.png';
+import itemSource_6 from '../assets/img/items/item_6.png';
+import itemSource_7 from '../assets/img/items/item_7.png';
+import itemSource_8 from '../assets/img/items/item_8.png';
+import itemSource_9 from '../assets/img/items/item_9.png';
+import itemSource_10 from '../assets/img/items/item_10.png';
+import itemSource_11 from '../assets/img/items/item_11.png';
+import itemSource_12 from '../assets/img/items/item_12.png';
+import itemSource_13 from '../assets/img/items/item_13.png';
+import itemSource_14 from '../assets/img/items/item_14.png';
+import itemSource_15 from '../assets/img/items/item_15.png';
+import itemSource_16 from '../assets/img/items/item_16.png';
+import itemSource_17 from '../assets/img/items/item_17.png';
+import itemSource_18 from '../assets/img/items/item_18.png';
+import itemSource_19 from '../assets/img/items/item_19.png';
+import itemSource_20 from '../assets/img/items/item_20.png';
+import itemSource_21 from '../assets/img/items/item_21.png';
+import itemSource_22 from '../assets/img/items/item_22.png';
+import itemSource_23 from '../assets/img/items/item_23.png';
+import itemSource_24 from '../assets/img/items/item_24.png';
+import itemSource_25 from '../assets/img/items/item_25.png';
+import itemSource_26 from '../assets/img/items/item_26.png';
+import itemSource_27 from '../assets/img/items/item_27.png';
+import itemSource_28 from '../assets/img/items/item_28.png';
+
+
 let sound_assets = [];
 let bg = null;
 async function  setup () {
-  bg = await Assets.load('/assets/img/ui/bg_item.png');
-  await Assets.load({alias: 'merge', src: merge});
-  await Assets.load({alias: 'particles', src: particles});
+  const textureData = await Assets.load(mergeSource);
+  await Assets.load({
+    alias: 'merge',
+    src: '../assets/img/merge/merge.json',
+    data: { texture: textureData }
+  });
+  await Assets.load({alias: 'bg', src: bgSource});
   await Assets.load({alias: 'finger', src: finger});
   await Assets.load({alias: 'button', src:button});
+  await Assets.load({alias: 'trail', src: starSource});
+  await Assets.load({alias: 'item_1', src: itemSource_1});
+  await Assets.load({alias: 'item_2', src: itemSource_2});
+  await Assets.load({alias: 'item_3', src: itemSource_3});
+  await Assets.load({alias: 'item_4', src: itemSource_4});
+  await Assets.load({alias: 'item_5', src: itemSource_5});
+  await Assets.load({alias: 'item_6', src: itemSource_6});
+  await Assets.load({alias: 'item_7', src: itemSource_7});
+  await Assets.load({alias: 'item_8', src: itemSource_8});
+  await Assets.load({alias: 'item_9', src: itemSource_9});
+  await Assets.load({alias: 'item_10', src: itemSource_10});
+  await Assets.load({alias: 'item_11', src: itemSource_11});
+  await Assets.load({alias: 'item_12', src: itemSource_12});
+  await Assets.load({alias: 'item_13', src: itemSource_13});
+  await Assets.load({alias: 'item_14', src: itemSource_14});
+  await Assets.load({alias: 'item_15', src: itemSource_15});
+  await Assets.load({alias: 'item_16', src: itemSource_16});
+  await Assets.load({alias: 'item_17', src: itemSource_17});
+  await Assets.load({alias: 'item_18', src: itemSource_18});
+  await Assets.load({alias: 'item_19', src: itemSource_19});
+  await Assets.load({alias: 'item_20', src: itemSource_20});
+  await Assets.load({alias: 'item_21', src: itemSource_21});
+  await Assets.load({alias: 'item_22', src: itemSource_22});
+  await Assets.load({alias: 'item_23', src: itemSource_23});
+  await Assets.load({alias: 'item_24', src: itemSource_24});
+  await Assets.load({alias: 'item_25', src: itemSource_25});
+  await Assets.load({alias: 'item_26', src: itemSource_26});
+  await Assets.load({alias: 'item_27', src: itemSource_27});
+  await Assets.load({alias: 'item_28', src: itemSource_28});
+
   sound_assets = [
     { name: "background", path: background },
     { name: 'click', path: click},
     { name: "merge_sound", path: merge_sound },
     { name: "coin_add", path: coin_add },
   ];
-  await Assets.load({alias: 'trail', src: '../assets/img/star.png'})
-  await Assets.load({
-    alias: 'TobiGreekCyrillic',
-    src: "../assets/img/TobiGreekCyrillic.fnt"
-  });
+  // await Assets.load({
+  //   alias: 'TobiGreekCyrillic',
+  //   src: fontSource
+  // });
   await Promise.all(
     sound_assets.map((s, index) =>
       new Promise(resolve => {
@@ -56,11 +130,10 @@ async function  setup () {
     )
   );
   sound.play('background');
-
+  bg = Assets.cache.get('bg');
 }
 
 
-await setup();
 
 const app = new Application();
 await app.init({
@@ -71,8 +144,7 @@ await app.init({
   resizeTo: window
 });
 
-
-
+await setup();
 
 document.getElementById('main').appendChild(app.canvas);
 let grid = [];
@@ -96,25 +168,21 @@ const historySize = 15;
 const ropeSize =  100;
 const points = [];
 
-
-//
-// const fadeOverlay = new Graphics();
-// fadeOverlay.beginFill(0x000000, 0.3);
-// fadeOverlay.drawRect(0, 0, window.innerWidth, window.innerHeight);
-// fadeOverlay.endFill();
-// fadeOverlay.alpha = 0;
-// fadeOverlay._zIndex = 9;
-// app.stage.addChild(fadeOverlay);
+let inactivityTimer;
+const inactivityTime = 5000;
+const fadeOverlay = new Graphics();
+fadeOverlay.beginFill(0x000000, 0.3);
+fadeOverlay.drawRect(0, 0, window.innerWidth, window.innerHeight);
+fadeOverlay.endFill();
+fadeOverlay.alpha = 0;
+fadeOverlay._zIndex = 9;
+app.stage.addChild(fadeOverlay);
 
 
 const winModal = new Container();
 winModal.visible = false;
-winModal.x =app.stage.width /2;
-winModal.y = app.stage.height /2 ;
 winModal.width = window.innerWidth;
 winModal.height = window.innerHeight;
-// winModal.width =  app.stage.width /2;
-// winModal.height =  app.stage.height /2 ;
 
 const modalContainer = new Container();
 modalContainer.label = 'MODAL_CONTAINER';
@@ -128,8 +196,6 @@ modalBg.x = 0;
 modalBg.y = 0;
 winModal._zIndex = 10;
 
-// modalContainer.width = window.innerWidth ;
-// modalContainer.height = window.innerHeight ;
 
 
 await Assets.load({alias: 'logo2', src: logo});
@@ -142,6 +208,7 @@ logoSprite2.position.set(window.innerWidth / 2.5, window.innerHeight / 3 - 225);
 modalContainer.width = 350;
 modalContainer.height = 250;
 modalContainer.pivot.set(0, 0);
+modalContainer.position.set(0,0)
 modalBg.addChild(modalContainer);
 winModal.addChild(modalBg);
 
@@ -213,37 +280,37 @@ function restartGame() {
 
 
 const SPRITE_LEVELS = [
-  {texture: await Assets.load('/assets/img/items/item_1.png'), value: 0, type: 'lock'},
-  {texture: await Assets.load('/assets/img/items/item_4.png'), value: 1, type: 'lock'},
-  {texture: await Assets.load('/assets/img/items/item_16.png'),value: 2, type: 'lock'},
-  {texture: await Assets.load('/assets/img/items/item_21.png'),value: 3, type: 'lock', final: true},
+  {texture: await Assets.cache.get('item_1'), value: 0, type: 'lock'},
+  {texture: await Assets.cache.get('item_4'), value: 1, type: 'lock'},
+  {texture: await Assets.cache.get('item_16'),value: 2, type: 'lock'},
+  {texture: await Assets.cache.get('item_21'),value: 3, type: 'lock', final: true},
 
-  {texture: await Assets.load('/assets/img/items/item_2.png'), value: 4, type: 'travel'},
-  {texture: await Assets.load('/assets/img/items/item_3.png'), value: 5, type: 'travel'},
-  {texture: await Assets.load('/assets/img/items/item_7.png'), value: 6, type: 'travel'},
-  {texture: await Assets.load('/assets/img/items/item_9.png'), value: 7, type: 'travel'},
-  {texture: await Assets.load('/assets/img/items/item_12.png'),value: 8, type: 'travel'},
-  {texture: await Assets.load('/assets/img/items/item_17.png'), value: 9, type: 'travel'},
-  {texture: await Assets.load('/assets/img/items/item_18.png'), value: 10, type: 'travel'},
-  {texture: await Assets.load('/assets/img/items/item_19.png'), value: 11, type: 'travel'},
-  {texture: await Assets.load('/assets/img/items/item_20.png'), value: 12, type: 'travel'},
-  {texture: await Assets.load('/assets/img/items/item_24.png'), value: 13, type: 'travel', final: true},
+  {texture: await Assets.cache.get('item_2'), value: 4, type: 'travel'},
+  {texture: await Assets.cache.get('item_3'), value: 5, type: 'travel'},
+  {texture: await Assets.cache.get('item_7'), value: 6, type: 'travel'},
+  {texture: await Assets.cache.get('item_9'), value: 7, type: 'travel'},
+  {texture: await Assets.cache.get('item_12'),value: 8, type: 'travel'},
+  {texture: await Assets.cache.get('item_17'), value: 9, type: 'travel'},
+  {texture: await Assets.cache.get('item_18'), value: 10, type: 'travel'},
+  {texture: await Assets.cache.get('item_19'), value: 11, type: 'travel'},
+  {texture: await Assets.cache.get('item_20'), value: 12, type: 'travel'},
+  {texture: await Assets.cache.get('item_24'), value: 13, type: 'travel', final: true},
 
-  {texture: await Assets.load('/assets/img/items/item_5.png'), value: 14, type: 'paper'},
-  {texture: await Assets.load('/assets/img/items/item_6.png'), value: 15, type: 'paper'},
-  {texture: await Assets.load('/assets/img/items/item_11.png'), value: 16, type: 'paper'},
-  {texture: await Assets.load('/assets/img/items/item_13.png'), value: 17, type: 'paper'},
-  {texture: await Assets.load('/assets/img/items/item_15.png'), value: 18, type: 'paper'},
-  {texture: await Assets.load('/assets/img/items/item_22.png'), value: 19, type: 'paper'},
-  {texture: await Assets.load('/assets/img/items/item_23.png'), value: 20, type: 'paper', final: true},
+  {texture: await Assets.cache.get('item_5'), value: 14, type: 'paper'},
+  {texture: await Assets.cache.get('item_6'), value: 15, type: 'paper'},
+  {texture: await Assets.cache.get('item_11'), value: 16, type: 'paper'},
+  {texture: await Assets.cache.get('item_13'), value: 17, type: 'paper'},
+  {texture: await Assets.cache.get('item_15'), value: 18, type: 'paper'},
+  {texture: await Assets.cache.get('item_22'), value: 19, type: 'paper'},
+  {texture: await Assets.cache.get('item_23'), value: 20, type: 'paper', final: true},
 
-  {texture: await Assets.load('/assets/img/items/item_8.png'), value: 21, type: 'photo'},
-  {texture: await Assets.load('/assets/img/items/item_10.png'), value: 22, type: 'photo'},
-  {texture: await Assets.load('/assets/img/items/item_14.png'), value: 23, type: 'photo'},
-  {texture: await Assets.load('/assets/img/items/item_25.png'), value: 24, type: 'photo'},
-  {texture: await Assets.load('/assets/img/items/item_26.png'), value: 25, type: 'photo'},
-  {texture: await Assets.load('/assets/img/items/item_27.png'), value: 26, type: 'photo'},
-  {texture: await Assets.load('/assets/img/items/item_28.png'), value: 27, type: 'photo', final: true},
+  {texture: await Assets.cache.get('item_8'), value: 21, type: 'photo'},
+  {texture: await Assets.cache.get('item_10'), value: 22, type: 'photo'},
+  {texture: await Assets.cache.get('item_14'), value: 23, type: 'photo'},
+  {texture: await Assets.cache.get('item_25'), value: 24, type: 'photo'},
+  {texture: await Assets.cache.get('item_26'), value: 25, type: 'photo'},
+  {texture: await Assets.cache.get('item_27'), value: 26, type: 'photo'},
+  {texture: await Assets.cache.get('item_28'), value: 27, type: 'photo', final: true},
 ];
 
 globalThis.__PIXI_APP__ = app;
@@ -511,12 +578,6 @@ function onDragEnd() {
       showWinScreenshowWinScreen();
     }
 
-
-
-
-
-
-
   } else {
     if (targetCell.sprite) {
       const temp = {
@@ -573,7 +634,6 @@ function findCellBySprite(sprite) {
   }
   return null;
 }
-
 function getCellIndex(x, y) {
   const row = Math.abs(Math.floor((x - gridContainer.getLocalBounds().x) / CELL_SIZE));
   const col = Math.abs(Math.floor((y - gridContainer.getLocalBounds().y) / CELL_SIZE));
@@ -581,8 +641,8 @@ function getCellIndex(x, y) {
 }
 
 
-function playEffectMerge( x, y) {
-  const effect = AnimatedSprite.fromFrames(Assets.cache.get('merge').data.animations['Merge_FX']);
+async function playEffectMerge( x, y) {
+  const effect = new AnimatedSprite(Assets.cache.get('merge').animations['Merge_FX']);
   effect._zIndex = 3;
   effect.anchor.set(0.5);
   effect.position.set(x, y);
@@ -603,8 +663,6 @@ function playEffectMerge( x, y) {
   return effect;
 }
 
-let inactivityTimer;
-const inactivityTime = 5000;
 
 function resetInactivityTimer() {
   if (fingerSprite) {
@@ -847,13 +905,15 @@ createSoundIcon();
 window.addEventListener('resize', async () => {
   updateGrid();
   createFinger();
-  showWinScreenshowWinScreen()
+  // showWinScreenshowWinScreen();
   winModal.width =  app.stage.width;
   winModal.height =  app.stage.height;
-  // modalContainer.position.set(
-  //   (window.innerWidth - (modalContainer.width)) / 2,
-  //   (window.innerHeight - (modalContainer.height)) / 2
-  // );
+  fadeOverlay.clear();
+  fadeOverlay.beginFill(0x000000, 0.3);
+  fadeOverlay.drawRect(0, 0, app.stage.width, app.stage.height);
+  fadeOverlay.endFill();
+  fadeOverlay.alpha = 0;
+  fadeOverlay._zIndex = 9;
 
 });
 

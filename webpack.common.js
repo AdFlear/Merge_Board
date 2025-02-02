@@ -1,4 +1,5 @@
 const path = require('path');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
   entry: {
@@ -13,8 +14,17 @@ module.exports = {
     rules: [
       {
         test: /\.(png|jpg|webp|json|fnt|mp3|wav)$/i,
-        type: 'asset/resource',
+        type: 'asset/inline',
+      },
+      {
+        test: /\.css$/i,
+        use: ['style-loader', 'css-loader'],
       },
     ],
   },
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: '[name].[contenthash].css',
+    }),
+  ],
 };

@@ -574,7 +574,7 @@ function onDragEnd() {
 
 
     addCoins(25);
-    if (sucesses >=2) {
+    if (sucesses >=10) {
       showWinScreenshowWinScreen();
     }
 
